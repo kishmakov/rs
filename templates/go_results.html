@@ -1,0 +1,36 @@
+{% extends "common.html" %}
+
+{% block css %}go_results.css{% endblock %}
+
+{% block title %}{{ test_name }}{% endblock %}
+
+{% block body %}
+    <div id="top">
+        <table id="results">
+            <tr>
+                <td></td>
+                <td>
+                    <img src="{{ static_url }}media/user_m.png" height="60px">
+                </td>
+                <td>
+                    <img src="{{ static_url }}media/user_w.png" height="60px">
+                </td>
+            </tr>
+            {% for tr in tests_results %}
+            <tr>
+                <td>
+                    <p class='test_name'>{{ tr.name }}</p>
+                </td>
+                <td>
+                    <p class="trm">{{ tr.m }}</p>
+                </td>
+                <td>
+                    <p class="trf">{{ tr.w }}</p>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div id="bottom">
+    </div>
+{% endblock %}

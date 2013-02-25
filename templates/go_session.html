@@ -1,0 +1,34 @@
+{% extends "common.html" %}
+
+{% block css %}go_session.css{% endblock %}
+
+{% block title %}Начало серии{% endblock %}
+
+{% block script %}
+    <script>
+
+        function letsgo() {
+            var cs = get_parameter("current_state");
+            set_parameter("current_state", cs + "_0");
+            post_to_url("{{ site_url }}/go/")
+        }
+
+        $(function() {
+            $('#next').on('click', letsgo);
+        });
+
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id='top'>
+        <div id='description'>
+            <img src="{{ static_url }}media/{{ user_picture }}" height="60px">
+        </div>
+    </div>
+    <div id="bottom">
+        <div id="go">
+            <button id="next" type="button">Начать ></button>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,74 @@
+<!doctype html public '-//W3C//DTD HTML 4.01//EN'
+    'http://www.w3.org/TR/html4/strict.dtd'>
+
+<html lang='ru'>
+<head>
+    <meta charset='utf-8' />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel='stylesheet' type='text/css' href='{{ static_url }}css/reset.css' />
+    <link rel='stylesheet' type='text/css' href='{{ static_url }}css/common.css' />
+    <link rel='stylesheet' type='text/css' href='{{ static_url }}css/{% block css %}{% endblock %}' />
+    <script src='{{ static_url }}js/jquery_d.js'></script>
+    <script src='{{ static_url }}js/jquery_ui.js'></script>
+    <script>
+        function update_button(button, show, enable) {
+            if (show) {
+                button.show();
+                button.prop('disabled', !enable);
+            } else {
+                button.hide();
+            }
+        }
+
+        function get_parameter(key) {
+            var input = $('#holder > input[name=' + key + ']');
+
+            if (input.size() == 0) {
+                return ''
+            }
+
+            return input.attr('value');
+        }
+
+        function set_parameter(key, value) {
+            var input = $('#holder > input[name=' + key + ']');
+
+            if (input.size() == 0) {
+                var new_input = document.createElement('input');
+                new_input.setAttribute('name', key);
+                form.append(new_input);
+                input = new_input;
+            }
+
+            input.attr('value', value);
+        }
+
+        function post_to_url(path) {
+            var form = $('#holder');
+
+            form.attr('method', 'post');
+            form.attr('action', path);
+
+            form.submit();
+        }
+    </script>
+    {% block script %}{% endblock %}
+</head>
+
+<body>
+<div id='body'>
+{% block body %}
+{% endblock %}
+</div>
+<div id='invisible'>
+    <form id='holder'>
+        {% csrf_token %}
+        <input name='selected_tests' value='{{ selected_tests }}' />
+        <input name='selected_order' value='{{ selected_order }}' />
+        <input name='current_state' value='{{ current_state }}' />
+        <input name='current_answers' value='{{ current_answers }}' />
+    </form>
+</div>
+</body>
+
+</html>

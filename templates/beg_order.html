@@ -1,0 +1,65 @@
+{% extends 'common.html' %}
+
+{% block css %}beg_order.css{% endblock %}
+
+{% block title %}Порядок прохождения{% endblock %}
+
+{% block script %}
+    <script>
+        function update() {
+            var is_left = 'left_radio' == $(this).attr('id');
+
+            var order = is_left ? 'mw' : 'wm';
+            var opposite = is_left ? $('#right_radio') : $('#left_radio');
+
+            opposite.prop('checked', false);
+            set_parameter('selected_order', order)
+        }
+
+        function lets_go() {
+            post_to_url('{{ site_url }}/go/')
+        }
+
+        $(function() {
+            $('#next').on('click', lets_go);
+            $(':radio').on('click', update);
+        });
+    </script>
+{% endblock %}
+
+
+{% block body %}
+    <div id='top'>
+        <div id='description'>
+            <p>
+                Вам нужно будет ответить на вопросы сначала по одиночке, а потом в паре.
+                При одиночных ответах только один человек должен находиться за компьютером.
+            </p>
+            <p>
+                Итак, выберите порядок прохождения.
+            </p>
+        </div>
+    </div>
+    <div id='middle'>
+        <div id='mleft' class='os'>
+            <input type='radio' id='left_radio'>
+                1:<img src='{{ static_url }}media/user_m.png' height='60px'>
+                2:<img src='{{ static_url }}media/user_w.png' height='60px'>
+                3:<img src='{{ static_url }}media/user_mw.png' height='60px'>
+            </input>
+        </div>
+        <div id='mright' class="os">
+            <input type='radio' id='right_radio'>
+                1:<img src='{{ static_url }}media/user_w.png' height='60px'>
+                2:<img src='{{ static_url }}media/user_m.png' height='60px'>
+                3:<img src='{{ static_url }}media/user_mw.png' height='60px'>
+            </input>
+        </div>
+    </div>
+    <div id='bottom'>
+        <div id='go'>
+            <button id='next' type='button'>Приступить ></button>
+        </div>
+    </div>
+{% endblock %}
+

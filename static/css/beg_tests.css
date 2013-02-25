@@ -1,0 +1,92 @@
+/* empty framework */
+
+#top {
+    padding: 0px; margin: 0px;
+    width: 790px; height: 170px;
+}
+
+#bottom {
+    padding: 0px; margin: 0px;
+    width: 790px; height: 220px;
+}
+
+/* internal divs */
+
+#description
+{
+    margin: 0px;
+
+    padding-right: 8px;
+    padding-left: 8px;
+    width: 774px; /* width + p-right + p-left + 2 x border = 790px */
+
+    padding-top: 4px;
+    margin-bottom: 4px;
+    height: 162px; /* height + p-top + m-bottom + 2 x border = 170px */
+
+    background: #F1F1F1;
+}
+
+
+#bleft
+{
+    padding: 0px;
+    margin: 0px;
+
+    float: left;
+    width: 590px;
+    height: 220px;
+    /* width + m-right = 590px */
+}
+
+div.test
+{
+    margin: 0px;
+    padding: 0px;
+
+    margin-bottom: 4px;
+    margin-right: 4px;
+
+    padding-top: 10px;
+
+    width: 192px;
+    height: 40px;
+
+    float: left;
+
+    background: #F1F1F1;
+}
+
+#bright
+{
+    float: right;
+    width: 200px;
+    height: 220px;
+}
+
+
+#timei
+{
+    width: 200px;
+    height: 116px;
+    margin-bottom: 4px;
+    /* height + m-bottom = 120px */
+
+    background: #F1F1F1;
+}
+
+#timee
+{
+    margin: 0px;
+    padding: 0px;
+    width: 200px;
+    height: 120px;
+}
+
+#go
+{
+    width: 200px;
+    height: 100px;
+
+    background: #F1F1F1;
+}
