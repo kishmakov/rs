@@ -154,18 +154,19 @@ def go_test(dict):
 
     return dict
 
-def get_percent(a1, a2, a12):
-    if (a1 == a2):
+def get_percent(man_answer, woman_answer, pair_answer):
+    """Compute man share for given answers."""
+    if (man_answer == woman_answer):
         return 50.0
 
-    mi = min(a1, a2)
-    ma = max(a1, a2)
+    mi = min(man_answer, woman_answer)
+    ma = max(man_answer, woman_answer)
 
-    a12 = min(ma, a12)
-    a12 = max(mi, a12)
+    pair_answer = min(ma, pair_answer)
+    pair_answer = max(mi, pair_answer)
 
-    d2 = a2 - a1
-    d12 = a12 - a1
+    d2 = man_answer - woman_answer
+    d12 = pair_answer - woman_answer
 
     return 100.0 * d12 / d2
 
@@ -181,20 +182,29 @@ def go_results(dict):
     for test_name in test_names:
         questions = test_questions(test_name)
         total_weight = 0
-        total_percent = 0
+        total_percent = 0 # percent gained by man
         for question in questions:
-            a1 = int(answers[shift])
-            a2 = int(answers[shift + sl])
-            a12 = int(answers[shift + 2 * sl])
+            a_m = int(answers[shift])
+            a_w = int(answers[shift + sl])
+            a_mw = int(answers[shift + 2 * sl])
+            shift += 1
             w = question['weight']
             total_weight += w
-            total_percent += get_percent(a1, a2, a12) * w
+            total_percent += get_percent(a_m, a_w, a_mw) * w
 
         mean_percent = total_percent / total_weight
 
+        if (dict['selected_order'] == 'wm'):
+            mean_percent = 100.0 - mean_percent
+
+        man_percent = int(mean_percent)
+        man_percent = min(99, man_percent)
+        man_percent = max(1, man_percent)
+        woman_percent = 100 - man_percent
+
         test_results.append({
-            'm' : mean_percent,
-            'w' : 100.0 - mean_percent,
+            'm' : man_percent,
+            'w' : woman_percent,
             'name' : test_name
         })
 
