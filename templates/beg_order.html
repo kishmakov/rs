@@ -6,24 +6,52 @@
 
 {% block script %}
     <script>
-        function update() {
-            var is_left = 'left_radio' == $(this).attr('id');
+    var order = '';
 
-            var order = is_left ? 'mw' : 'wm';
-            var opposite = is_left ? $('#right_radio') : $('#left_radio');
-
-            opposite.prop('checked', false);
-            set_parameter('selected_order', order)
-        }
-
-        function lets_go() {
-            post_to_url('{{ site_url }}/go/')
-        }
-
-        $(function() {
-            $('#next').on('click', lets_go);
-            $(':radio').on('click', update);
+    function update_options() {
+        $('.option').each(function () {
+            var div = $(this);
+            var input = div.find('input');
+            var id = input.attr('id');
+            toggle_div(div, id == order);
+            input.prop('checked', id == order);
         });
+    }
+
+    function update_next() {
+        var enable_next = order != '';
+        update_button($('#next'), true, enable_next);
+    }
+
+    function update_state() {
+        update_options();
+        update_next();
+    }
+
+    function toggle_button(event) {
+        event.stopPropagation();
+        order = event.data.id;
+        update_state();
+    }
+
+    function init_option(div) {
+        var input = div.find('input');
+        var id = input.attr('id');
+        input.on('click', {id: id}, toggle_button);
+    }
+
+    function lets_go() {
+        set_parameter('selected_order', order);
+        post_to_url('{{ site_url }}/go/')
+    }
+
+    $(function() {
+        update_state();
+        init_wrappers();
+        init_options();
+
+        $('#next').on('click', lets_go);
+    });
     </script>
 {% endblock %}
 
@@ -35,30 +63,35 @@
                 Вам нужно будет ответить на вопросы сначала по одиночке, а потом в паре.
                 При одиночных ответах только один человек должен находиться за компьютером.
             </p>
+            <br/>
             <p>
                 Итак, выберите порядок прохождения.
             </p>
         </div>
     </div>
     <div id='middle'>
-        <div id='mleft' class='os'>
-            <input type='radio' id='left_radio'>
-                1:<img src='{{ static_url }}media/user_m.png' height='60px'>
-                2:<img src='{{ static_url }}media/user_w.png' height='60px'>
-                3:<img src='{{ static_url }}media/user_mw.png' height='60px'>
-            </input>
+        <div id='mleft' class='option'>
+            <div class='wrapper'>
+                <input type='radio' id='mw'>
+                    <img src='{{ static_url }}media/user_m.png' height='40px'>
+                    <img src='{{ static_url }}media/user_w.png' height='40px'>
+                    <img src='{{ static_url }}media/user_mw.png' height='40px'>
+                </input>
+            </div>
         </div>
-        <div id='mright' class="os">
-            <input type='radio' id='right_radio'>
-                1:<img src='{{ static_url }}media/user_w.png' height='60px'>
-                2:<img src='{{ static_url }}media/user_m.png' height='60px'>
-                3:<img src='{{ static_url }}media/user_mw.png' height='60px'>
-            </input>
+        <div id='mright'>
+            <div class='wrapper' class='option'>
+                <input type='radio' id='wm'>
+                    <img src='{{ static_url }}media/user_w.png' height='40px'>
+                    <img src='{{ static_url }}media/user_m.png' height='40px'>
+                    <img src='{{ static_url }}media/user_mw.png' height='40px'>
+                </input>
+            </div>
         </div>
     </div>
     <div id='bottom'>
         <div id='go'>
-            <button id='next' type='button'>Приступить ></button>
+            <button id='next' class='normal_text'>Приступить</button>
         </div>
     </div>
 {% endblock %}

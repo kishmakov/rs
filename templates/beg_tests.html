@@ -7,23 +7,24 @@
 {% block script %}
     <script>
     var selected_tests = 0;
-    var prev_selected = 0;
 
     var time = new Array();
     var ename = new Array();
+    var selected = new Array();
     {% for test in tests %}
     time[{{ test.id }}] = {{ test.time }};
     ename[{{ test.id }}] = '{{ test.ename }}';
+    selected[{{ test.id }}] = false;
     {% endfor %}
 
     function time_estimate_as_int() {
         var time_needed = 0;
 
-        $(':checkbox:checked').each(function () {
-            var raw_id = $(this).attr('id');
-            var number = raw_id[0, raw_id.length - 3];
-            time_needed += time[parseInt(number)];
-        });
+        for (var i = 0; i < time.length; i++) {
+            if (selected[i]) {
+                time_needed += time[i];
+            }
+        }
 
         return time_needed;
     }
@@ -33,6 +34,10 @@
 
         var hours = Math.floor(time / 60);
         var minutes = time % 60;
+
+        if (time == 0) {
+            return '...';
+        }
 
         var message = 'Займёт около ';
 
@@ -52,29 +57,39 @@
     function selected_names() {
         var names = '';
         var counter = 0;
-        $(':checkbox:checked').each(function () {
-            var raw_id = $(this).attr('id');
-            var number = raw_id[0, raw_id.length - 3];
-            if (counter++ > 0) {
-                names += '_'
+
+        for (var i = 0; i < ename.length; i++) {
+            if (selected[i]) {
+                if (counter++ > 0) {
+                    names += '_';
+                }
+                names += ename[i];
             }
-            names += ename[parseInt(number)];
-        });
+        }
 
         return names;
     }
 
+    function update_options() {
+        for (var i = 0; i < selected.length; i++) {
+            var radio = $('.option > .wrapper > #' + i + 'id');
+            radio.prop('checked', selected[i]);
+            var div = radio.parent().parent();
+            toggle_div(div, selected[i]);
+        }
+    }
+
+    function update_selected() {
+        selected_tests = 0;
+        for (var i = 0; i < selected.length; i++) {
+            if (selected[i]) {
+                selected_tests++;
+            }
+        }
+    }
+
     function update_time() {
-        var time_div = $('#timei');
-
-        if (selected_tests == 1 && prev_selected == 0) {
-            time_div.show(600);
-        }
-
-        if (selected_tests == 0 && prev_selected == 1) {
-            time_div.hide(600);
-        }
-
+        update_selected();
         $('#textual_time').text(time_estimate_as_txt());
     }
 
@@ -84,11 +99,27 @@
     }
 
     function update_state() {
-        prev_selected = selected_tests;
-        selected_tests = $(':checkbox:checked').size();
-
+        update_options();
         update_time();
         update_next();
+    }
+
+    function get_number(input) {
+        var raw_id = input.attr('id');
+        var number = raw_id[0, raw_id.length - 3];
+        return parseInt(number);
+    }
+
+    function toggle_button(event) {
+        event.stopPropagation();
+        selected[event.data.id] = !selected[event.data.id];
+        update_state();
+    }
+
+    function init_option(div) {
+        var input = div.find('input');
+        var id = get_number(input);
+        input.on('click', {id: id}, toggle_button);
     }
 
     function lets_go() {
@@ -98,17 +129,18 @@
 
     $(function() {
         update_state();
-        $('#timei').hide();
+        init_wrappers();
+        init_options();
+
         $('#next').on('click', lets_go);
-        $(':checkbox').on('click', update_state);
     });
     </script>
 {% endblock %}
 
 {% block body %}
     <div id='top'>
-        <div id='description'>
-            <p>
+        <div id='description' class='strong_grey'>
+            <p class='normal_text'>
                 Выберите дисциплины, в которых вы хотите определить степень
                 влияния каждого на совместные решения.
             </p>
@@ -117,20 +149,23 @@
     <div id='bottom'>
         <div id='bleft'>
             {% for test in tests %}
-            <div class='test'>
-                <input type='checkbox' id='{{ test.id }}cb' /><label for='{{ test.id }}cb'>{{ test.rname  }}</label>
+            <div class='option'>
+                <div class='wrapper'>
+                    <input type='checkbox' id='{{ test.id }}id' />
+                    <label class='normal_text' for='{{ test.id }}id'>{{ test.rname }}</label>
+                </div>
             </div>
             {% endfor %}
         </div>
         <div id='bright'>
-            <div id='timee'>
-                <div id='timei'>
-                    <img src='{{ static_url }}media/time.png' height='60px'>
-                    <p id='textual_time' ></p>
+            <div id='time'>
+                <div class='wrapper'>
+                    <img src='{{ static_url }}media/time.png' height='45px'>
+                    <p class='normal_text' id='textual_time'></p>
                 </div>
             </div>
             <div id='go'>
-                <button id='next' type='button'>Далее ></button>
+                <button id='next' class='normal_text'>Далее</button>
             </div>
         </div>
     </div>

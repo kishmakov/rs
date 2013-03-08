@@ -11,13 +11,45 @@
     <script src='{{ static_url }}js/jquery_d.js'></script>
     <script src='{{ static_url }}js/jquery_ui.js'></script>
     <script>
+        function center(element) {
+            var father = element.parent();
+            var dy = 0.5 * (father.height() - element.outerHeight());
+            var dx = 0.5 * (father.width() - element.outerWidth());
+            element.css({
+                'left': dx + 'px',
+                'top': dy + 'px',
+                'position' : 'relative'
+            });
+        }
+
         function update_button(button, show, enable) {
             if (show) {
                 button.show();
                 button.prop('disabled', !enable);
+                center(button);
             } else {
                 button.hide();
             }
+        }
+
+        function toggle_div(div, flag) {
+            if (flag) {
+                div.removeClass('dismissed_option').addClass('selected_option');
+            } else {
+                div.removeClass('selected_option').addClass('dismissed_option');
+            }
+        }
+
+        function init_wrappers() {
+            $('.wrapper').each(function () {
+                center($(this));
+            });
+        }
+
+        function init_options() {
+            $('.option').each(function () {
+                init_option($(this));
+            });
         }
 
         function get_parameter(key) {
