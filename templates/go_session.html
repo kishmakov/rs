@@ -1,4 +1,4 @@
-{% extends "common.html" %}
+{% extends 'common.html' %}
 
 {% block css %}go_session.css{% endblock %}
 
@@ -7,9 +7,9 @@
 {% block script %}
     <script>
     function lets_go() {
-        var cs = get_parameter("current_state");
-        set_parameter("current_state", cs + "_0");
-        post_to_url("{{ site_url }}/go/")
+        var cs = get_parameter('current_state');
+        set_parameter('current_state', cs + '_0');
+        post_to_url('{{ site_url }}/go/')
     }
 
     $(function() {
@@ -23,12 +23,12 @@
 {% block body %}
     <div id='top'>
         <div class='wrapper'>
-            <img src="{{ static_url }}media/{{ user_picture }}" height="150px">
+            <img src='{{ static_url }}media/{{ user_picture }}' height='150px'>
         </div>
     </div>
-    <div id="bottom">
-        <div id="go">
-            <button id="next" type="button">Начать</button>
+    <div id='bottom'>
+        <div id='go'>
+            <button id='next' class='normal_text'>Начать</button>
         </div>
     </div>
 {% endblock %}

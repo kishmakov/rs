@@ -51,6 +51,11 @@ body {
     background: #4587C8;
 }
 
+.selected_option > .wrapper > label {
+    color: #ffffff;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+}
+
 /* common */
 
 button {
