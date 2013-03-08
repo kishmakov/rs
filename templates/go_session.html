@@ -2,33 +2,33 @@
 
 {% block css %}go_session.css{% endblock %}
 
-{% block title %}Начало серии{% endblock %}
+{% block title %}Начало этапа{% endblock %}
 
 {% block script %}
     <script>
+    function lets_go() {
+        var cs = get_parameter("current_state");
+        set_parameter("current_state", cs + "_0");
+        post_to_url("{{ site_url }}/go/")
+    }
 
-        function letsgo() {
-            var cs = get_parameter("current_state");
-            set_parameter("current_state", cs + "_0");
-            post_to_url("{{ site_url }}/go/")
-        }
-
-        $(function() {
-            $('#next').on('click', letsgo);
-        });
-
+    $(function() {
+        init_wrappers();
+        $('#next').on('click', lets_go);
+        update_button($('#next'), true, true);
+    });
     </script>
 {% endblock %}
 
 {% block body %}
     <div id='top'>
-        <div id='description'>
-            <img src="{{ static_url }}media/{{ user_picture }}" height="60px">
+        <div class='wrapper'>
+            <img src="{{ static_url }}media/{{ user_picture }}" height="150px">
         </div>
     </div>
     <div id="bottom">
         <div id="go">
-            <button id="next" type="button">Начать ></button>
+            <button id="next" type="button">Начать</button>
         </div>
     </div>
 {% endblock %}

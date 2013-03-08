@@ -2,7 +2,7 @@
 
 {% block css %}beg_order.css{% endblock %}
 
-{% block title %}Порядок прохождения{% endblock %}
+{% block title %}Порядок{% endblock %}
 
 {% block script %}
     <script>
@@ -59,39 +59,49 @@
 {% block body %}
     <div id='top'>
         <div id='description'>
-            <p>
-                Вам нужно будет ответить на вопросы сначала по одиночке, а потом в паре.
-                При одиночных ответах только один человек должен находиться за компьютером.
+            <p class='normal_text'>
+                Итак, вы выбрали дисциплины. Вам предстоит трижды
+                ответить на блок вопросов: сначала каждый из вас отвечает отдельно,
+                а потом вы отвечаете вдвоём.
             </p>
             <br/>
-            <p>
-                Итак, выберите порядок прохождения.
+            <p class='normal_text'>
+                Для чистоты тестирования, не отвечающий партнёр должен уходить
+                из-за компьютера во время одиночной сессии. Когда же вы
+                отвечаете вдвоём, вы должны выбирать тот ответ, который вы даёте
+                на данный вопрос как пара.
+            </p>
+            <br/>
+            <p class='normal_text'>
+                Выберите порядок и начинайте тестирование.
             </p>
         </div>
     </div>
     <div id='middle'>
-        <div id='mleft' class='option'>
+        <div class='option'>
             <div class='wrapper'>
-                <input type='radio' id='mw'>
+                <input type='radio' id='mw'/>
+                <label for='mw'>
                     <img src='{{ static_url }}media/user_m.png' height='40px'>
                     <img src='{{ static_url }}media/user_w.png' height='40px'>
                     <img src='{{ static_url }}media/user_mw.png' height='40px'>
-                </input>
+                </label>
             </div>
         </div>
-        <div id='mright'>
-            <div class='wrapper' class='option'>
-                <input type='radio' id='wm'>
+        <div class='option'>
+            <div class='wrapper'>
+                <input type='radio' id='wm'/>
+                <label for='wm'>
                     <img src='{{ static_url }}media/user_w.png' height='40px'>
                     <img src='{{ static_url }}media/user_m.png' height='40px'>
                     <img src='{{ static_url }}media/user_mw.png' height='40px'>
-                </input>
+                </label>
             </div>
         </div>
     </div>
     <div id='bottom'>
         <div id='go'>
-            <button id='next' class='normal_text'>Приступить</button>
+            <button id='next' class='normal_text'>Начать</button>
         </div>
     </div>
 {% endblock %}

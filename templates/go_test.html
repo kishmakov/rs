@@ -1,146 +1,184 @@
-{% extends "common.html" %}
+{% extends 'common.html' %}
 
 {% block css %}go_test.css{% endblock %}
 
-{% block title %}{{ test_name }}{% endblock %}
+{% block title %}Тест: {{ test_name }}{% endblock %}
 
 {% block script %}
-    <script xmlns="http://www.w3.org/1999/html">
+    <script xmlns='http://www.w3.org/1999/html'>
 
 
-        var current_question = 0;
-        const number_of_questions = {{ number_of_questions }};
-        var number_of_answered = 0;
+    var current_question = 0;
+    const number_of_questions = {{ number_of_questions }};
+    var number_of_answered = 0;
 
-        var question = new Array();
-        var answer = new Array();
-        {% for question in questions %}
-        question[{{ question.id }}] = '{{ question.text }}';
-        answer[{{ question.id }}] = 0;
-        {% endfor %}
+    var question = new Array();
+    var answer = new Array();
+    {% for question in questions %}
+    question[{{ question.id }}] = '{{ question.text }}';
+    answer[{{ question.id }}] = 0;
+    {% endfor %}
 
-        function choose_answer() {
-            if (answer[current_question] == 0) {
-                number_of_answered++;
-            }
-
-            var id = $(this).attr('id');
-            var num = parseInt(id[1]);
-            answer[current_question] = num;
-
-            update_state();
+    function prev_question() {
+        if (current_question > 0) {
+            current_question--;
         }
 
-        function prev_question() {
-            if (current_question > 0) {
-                current_question--;
-            }
+        update_state();
+    }
 
-            update_state();
+    function next_question() {
+        if (current_question < number_of_questions - 1) {
+            current_question++;
         }
 
-        function next_question() {
-            if (current_question < number_of_questions - 1) {
-                current_question++;
-            }
+        update_state();
+    }
 
-            update_state();
-        }
+    function update_question() {
+        $('#question_text').text(question[current_question]);
+    }
 
-        function update_question() {
-            $('#question_text').text(question[current_question]);
-
-            $(':radio').prop('checked', false);
-            if (answer[current_question] > 0) {
-                var lid = '#l' + answer[current_question];
-                $(lid).prop('checked', true);
-            }
-        }
-
-        function update_pq() {
-            var show_pq = current_question > 0;
-
-            update_button($('#pq'), show_pq, true);
-        }
-
-        function update_nq() {
-            var show_nq = current_question + 1 < number_of_questions;
-            var enable_nq = answer[current_question] > 0;
-
-            update_button($('#nq'), show_nq, enable_nq);
-        }
-
-        function update_next() {
-            var all_answered = number_of_questions == number_of_answered;
-            var show_next = all_answered || current_question + 1 == number_of_questions;
-            var enable_next = all_answered;
-
-            update_button($('#next'), show_next, enable_next);
-        }
-
-        function update_state() {
-            update_question();
-            update_nq();
-            update_pq();
-            update_next();
-        }
-
-        function prepare_state() {
-            var state = get_parameter("current_state").split("_");
-            var current_session = parseInt(state[0]);
-            var next_test = parseInt(state[1]) + 1;
-            set_parameter("current_state", current_session + "_" + next_test);
-        }
-
-        function prepare_answers() {
-            var current_answers = get_parameter('current_answers');
-            var new_answers = '';
-            for (i = 0; i < number_of_questions; i++) {
-                new_answers += answer[i];
-            }
-
-            set_parameter('current_answers', current_answers + new_answers);
-        }
-
-        function lets_go() {
-            prepare_state();
-            prepare_answers();
-            post_to_url("{{ site_url }}/go/")
-        }
-
-        $(function() {
-            update_state();
-            $(':radio').on('click', choose_answer);
-            $('#nq').on('click', next_question);
-            $('#pq').on('click', prev_question);
-            $('#next').on('click', lets_go);
+    function update_options() {
+        $('.option').each(function () {
+            var div = $(this);
+            var input = div.find('input');
+            var lid = 'l' + answer[current_question];
+            var id = input.attr('id');
+            toggle_div(div, id == lid);
+            input.prop('checked', id == lid);
         });
+    }
+
+    function update_pq() {
+        var show_pq = current_question > 0;
+
+        update_button($('#pq'), show_pq, true);
+    }
+
+    function update_nq() {
+        var show_nq = current_question + 1 < number_of_questions;
+        var enable_nq = answer[current_question] > 0;
+
+        update_button($('#nq'), show_nq, enable_nq);
+    }
+
+    function update_next() {
+        var all_answered = number_of_questions == number_of_answered;
+        var show_next = current_question + 1 == number_of_questions;
+        var enable_next = all_answered;
+
+        update_button($('#next'), show_next, enable_next);
+    }
+
+    function update_state() {
+        update_question();
+        update_options();
+        update_nq();
+        update_pq();
+        update_next();
+    }
+
+    function prepare_state() {
+        var state = get_parameter('current_state').split('_');
+        var current_session = parseInt(state[0]);
+        var next_test = parseInt(state[1]) + 1;
+        set_parameter('current_state', current_session + '_' + next_test);
+    }
+
+    function prepare_answers() {
+        var current_answers = get_parameter('current_answers');
+        var new_answers = '';
+        for (i = 0; i < number_of_questions; i++) {
+            new_answers += answer[i];
+        }
+
+        set_parameter('current_answers', current_answers + new_answers);
+    }
+
+    function toggle_button(event) {
+        event.stopPropagation();
+
+        if (answer[current_question] == 0) {
+            number_of_answered++;
+        }
+
+        answer[current_question] = event.data.num;
+        update_state();
+    }
+
+
+    function init_option(div) {
+        var input = div.find('input');
+        var id = input.attr('id');
+        var num = parseInt(id[1]);
+
+        input.on('click', {num: num}, toggle_button);
+    }
+
+    function lets_go() {
+        prepare_state();
+        prepare_answers();
+        post_to_url('{{ site_url }}/go/')
+    }
+
+    $(function() {
+        update_state();
+        init_wrappers();
+        init_options();
+        $('#nq').on('click', next_question);
+        $('#pq').on('click', prev_question);
+        $('#next').on('click', lets_go);
+    });
     </script>
 {% endblock %}
 
 
 {% block body %}
-    <div id="top">
-        <div id="question">
-            <p id="question_text"></p>
-        </div>
-        <div id="answer">
-            <input type="radio" id="l1">нет</input>
-            <input type="radio" id="l2">скорее нет</input>
-            <input type="radio" id="l3">нейтрально</input>
-            <input type="radio" id="l4">скорее да</input>
-            <input type="radio" id="l5">да</input>
+    <div id='top'>
+        <div id='description'>
+            <p id='question_text' class='normal_text'></p>
         </div>
     </div>
-    <div id="bottom">
-        <div id="prev_question">
-            <button id="pq" type="button">< Предыдущий вопрос</button>
+    <div id='middle'>
+        <div class='option'>
+            <div class='wrapper'>
+                <input type='radio' id='l1'/>
+                <label for='l1' class='normal_text'>Нет</label>
+            </div>
         </div>
-        <div id="next_question">
-            <button id="nq" type="button">Следующий вопрос ></button>
+        <div class='option'>
+            <div class='wrapper'>
+                <input type='radio' id='l2'/>
+                <label for='l2' class='normal_text'>Скорее нет</label>
+            </div>
         </div>
-        <div id="go">
-            <button id="next" type="button">Далее ></button>
+        <div class='option'>
+            <div class='wrapper'>
+                <input type='radio' id='l3'/>
+                <label for='l3' class='normal_text'>Ни да, ни нет</label>
+            </div>
+        </div>
+        <div class='option'>
+            <div class='wrapper'>
+                <input type='radio' id='l4'/>
+                <label for='l4' class='normal_text'>Скорее да</label>
+            </div>
+        </div>
+        <div class='option'>
+            <div class='wrapper'>
+                <input type='radio' id='l5'/>
+                <label for='l5' class='normal_text'>Да</label>
+            </div>
+        </div>
+    </div>
+    <div id='bottom'>
+        <div id='prev_question'>
+            <button id='pq' class='normal_text'>Вернуться</button>
+        </div>
+        <div id='next_question'>
+            <button id='nq' class='normal_text'>Далее</button>
+            <button id='next' class='normal_text'>Вперёд</button>
         </div>
     </div>
 {% endblock %}

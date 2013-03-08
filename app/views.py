@@ -141,6 +141,10 @@ def go_session(dict):
 
     return dict
 
+def russian_name(ename):
+    test = Description.objects.get(name=ename)
+    return test.rname
+
 def go_test(dict):
     test_names = dict['selected_tests'].split('_')
     states = dict['current_state'].split('_')
@@ -149,7 +153,7 @@ def go_test(dict):
     current_name = test_names[current_test]
 
     dict['questions'] = test_questions(current_name)
-    dict['test_name'] = current_name
+    dict['test_name'] = russian_name(current_name)
     dict['number_of_questions'] = len(dict['questions'])
 
     return dict

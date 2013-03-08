@@ -17,13 +17,10 @@
 /* internal divs */
 
 #description {
-    margin: 0px;
-    padding-right: 8px;
-    padding-left: 8px;
-    width: 774px; /* width + p-right + p-left + 2 x border = 790px */
-    padding-top: 4px;
-    margin-bottom: 4px;
-    height: 162px; /* height + p-top + m-bottom + 2 x border = 170px */
+    padding: 20px 20px 0 20px;
+    margin: 0 0 10px 0;
+    width: 750px; /* total = 790px */
+    height: 140px; /* total = 170px */
 }
 
 #bleft {

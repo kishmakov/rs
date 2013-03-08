@@ -22,6 +22,10 @@ body {
 
 /* text */
 
+#description > p {
+    text-indent : 18px;
+}
+
 .normal_text {
     text-shadow: 1px 1px 0 #fff;
     font: 15px/normal sans-serif;
@@ -38,8 +42,8 @@ body {
 
 /* colors */
 
-.dismissed_option,
-.strong_grey {
+#description,
+.dismissed_option {
     background: #F1F1F1;
 }
 
@@ -104,9 +108,17 @@ button:enabled:active {
     background-image: linear-gradient(#3072b3, #599bdc);
 }
 
+/* special */
+
+#top,
+#middle,
+#bottom {
+    padding: 0;
+    margin: 0;
+}
+
 #go {
     width: 200px;
     height: 80px;
-    background: grey;
 }
 

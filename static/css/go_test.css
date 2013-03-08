@@ -1,104 +1,47 @@
-/* top and bottom are just empty */
+/* empty framework */
 
-#top
-{
-    padding: 0px;
-    margin: 0px;
-
+#top {
     width: 790px;
-    height: 300px;
+    height: 270px;
 }
 
-#bottom
-{
-    padding: 0px;
-    margin: 0px;
-
+#middle {
     width: 790px;
-    height: 90px;
+    height: 40px;
 }
 
-#question
-{
-    margin: 0px;
-
-    padding-right: 8px;
-    padding-left: 8px;
-    width: 774px; /* width + p-right + p-left + 2 x border = 790px */
-
-    padding-top: 4px;
-    margin-bottom: 4px;
-    height: 242px; /* height + p-top + m-bottom + 2 x border = 250px */
-
-    background: #F1F1F1;
+#bottom {
+    width: 790px;
+    height: 80px;
 }
 
-#answer
-{
-    margin: 0px;
+/* internal divs */
 
-    padding-right: 8px;
-    padding-left: 8px;
-    width: 774px; /* width + p-right + p-left + 2 x border = 790px */
-
-    padding-top: 4px;
-    margin-bottom: 4px;
-    height: 242px; /* height + p-top + m-bottom + 2 x border = 250px */
-
-    background: #F1F1F1;
-}
-
-#bleft
-{
-    padding: 0px;
-    margin: 0px;
-
-    float: left;
-    width: 590px;
-    height: 220px;
-    /* width + m-right = 590px */
+#description {
+    padding: 30px 20px 0 20px;
+    margin: 0 0 10px 0;
+    width: 750px; /* total = 790px */
+    height: 230px; /* total = 270px */
 }
 
 div.option
-{
-    margin: 0px;
-    padding: 0px;
+{   float: left;
+    padding: 0;
+    margin: 0 0 4px 5px;
+    width: 152px; /* total = 790px */
+    height: 40px; /* total = 40px */
+}
 
-    margin-bottom: 4px;
-    margin-right: 4px;
-
-    padding-top: 10px;
-
-    width: 192px;
-    height: 40px;
-
+#prev_question {
     float: left;
-
-    background: #F1F1F1;
 }
 
-#bright
-{
+#next_question {
     float: right;
-    width: 200px;
-    height: 220px;
 }
 
-
-#time
-{
+#next_question,
+#prev_question {
     width: 200px;
-    height: 116px;
-    margin-bottom: 4px;
-    /* height + m-bottom = 120px */
-
-    background: #F1F1F1;
-}
-
-#go
-{
-    width: 200px;
-    height: 100px;
-
-    background: #F1F1F1;
+    height: 80px;
 }
