@@ -209,7 +209,7 @@ def go_results(dict):
         test_results.append({
             'm' : man_percent,
             'w' : woman_percent,
-            'name' : test_name
+            'name' : russian_name(test_name)
         })
 
     dict['tests_results'] = test_results

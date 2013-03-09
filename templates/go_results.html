@@ -2,35 +2,90 @@
 
 {% block css %}go_results.css{% endblock %}
 
-{% block title %}{{ test_name }}{% endblock %}
+{% block title %}Результаты{% endblock %}
+
+{% block script %}
+    <script>
+    function lets_go() {
+        alert('Could not post :(')
+    }
+
+    function init_percents() {
+        var mpercents = $('#results').find('p.trm');
+        var wpercents = $('#results').find('p.trw');
+        var percents = mpercents.add(wpercents);
+        percents.each(function () {
+            var p = $(this);
+            var ptext = p.text();
+            var percent = parseInt(ptext);
+            var fsize = 15 + Math.floor(percent / 10);
+            ptext += '%';
+            p.text(ptext);
+            p.css({
+                'font-size' : fsize
+            })
+        });
+    }
+
+    $(function() {
+        init_wrappers();
+        init_percents();
+        $('#next').on('click', lets_go);
+        update_button($('#next'), true, true);
+    });
+    </script>
+{% endblock %}
 
 {% block body %}
-    <div id="top">
-        <table id="results">
-            <tr>
-                <td></td>
-                <td>
-                    <img src="{{ static_url }}media/user_m.png" height="60px">
-                </td>
-                <td>
-                    <img src="{{ static_url }}media/user_w.png" height="60px">
-                </td>
-            </tr>
-            {% for tr in tests_results %}
-            <tr>
-                <td>
-                    <p class='test_name'>{{ tr.name }}</p>
-                </td>
-                <td>
-                    <p class="trm">{{ tr.m }}</p>
-                </td>
-                <td>
-                    <p class="trf">{{ tr.w }}</p>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+    <div id='top'>
+        <div id='description'>
+            <p class='normal_text'>
+                Результаты вашего тестирования по дисциплинам:
+            </p>
+        </div>
     </div>
-    <div id="bottom">
+    <div id='middle'>
+        <div class='wrapper'>
+            <table id='results'>
+                <tr>
+                    <th></th>
+                    <th>
+                        <img src="{{ static_url }}media/user_m.png" height="40px">
+                    </th>
+                    <th>
+                        <img src="{{ static_url }}media/user_w.png" height="40px">
+                    </th>
+                </tr>
+                {% for tr in tests_results %}
+                <tr>
+                    <td>
+                        <div class='wrapper'>
+                            <p class='normal_text'>{{ tr.name }}:</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class='wrapper'>
+                            <p class="trm">{{ tr.m }}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class='wrapper'>
+                            <p class="trw">{{ tr.w }}</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div id='bottom'>
+        <div id='share_text'>
+            <div class='wrapper'>
+                <p class='normal_text'>Расскажите друзьям про приложение!</p>
+            </div>
+        </div>
+        <div id='go'>
+            <button id='next' class='normal_text'>Рассказать</button>
+        </div>
     </div>
 {% endblock %}

@@ -113,7 +113,8 @@
         var id = input.attr('id');
         var num = parseInt(id[1]);
 
-        input.on('click', {num: num}, toggle_button);
+        var subtree = div.find('*').add(div);
+        subtree.on('click', {num: num}, toggle_button);
     }
 
     function lets_go() {

@@ -1,90 +1,54 @@
-/* top and bottom are just empty */
-
-#top
-{
-    padding: 0px;
-    margin: 0px;
-
+#top {
     width: 790px;
-    height: 170px;
+    height: 70px;
 }
 
-#bottom
-{
-    padding: 0px;
-    margin: 0px;
-
+#middle {
     width: 790px;
-    height: 220px;
+    height: 230px;
 }
 
-#description
-{
-    margin: 0px;
-
-    padding-right: 8px;
-    padding-left: 8px;
-    width: 774px; /* width + p-right + p-left + 2 x border = 790px */
-
-    padding-top: 4px;
-    margin-bottom: 4px;
-    height: 162px; /* height + p-top + m-bottom + 2 x border = 170px */
-
-    background: #F1F1F1;
+#bottom {
+    width: 790px;
+    height: 70px;
 }
 
+#description {
+    padding: 20px 20px 0 20px;
+    margin: 0 0 10px 0;
+    width: 750px; /* total = 790px */
+    height: 40px; /* total = 80px */
+}
 
-#bleft
-{
-    padding: 0px;
-    margin: 0px;
-
-    float: left;
+#share_text {
     width: 590px;
-    height: 220px;
-    /* width + m-right = 590px */
+    height: 70px;
+    background: #F1F1F1;
 }
 
-div.option
-{
-    margin: 0px;
-    padding: 0px;
-
-    margin-bottom: 4px;
-    margin-right: 4px;
-
-    padding-top: 10px;
-
-    width: 192px;
-    height: 40px;
-
+#go,
+#share_text {
     float: left;
-
-    background: #F1F1F1;
 }
 
-#bright
-{
-    float: right;
-    width: 200px;
-    height: 220px;
+p.trm {
+    color: #3c8dde;
 }
 
-
-#time
-{
-    width: 200px;
-    height: 116px;
-    margin-bottom: 4px;
-    /* height + m-bottom = 120px */
-
-    background: #F1F1F1;
+p.trw {
+    color: #ffc0cb;
 }
 
-#go
-{
-    width: 200px;
-    height: 100px;
+#middle > div.wrapper {
+    width: 300px;
+}
 
-    background: #F1F1F1;
+th, td {
+    height: 40px;
+    width: 100px;
+    text-align: center;
+}
+
+td {
+    border-top: 0.5px solid #F1F1F1;
 }

@@ -110,7 +110,7 @@
     }
 
     function toggle_button(event) {
-        event.stopPropagation();
+        event.preventDefault();
         selected[event.data.id] = !selected[event.data.id];
         update_state();
     }
@@ -118,7 +118,8 @@
     function init_option(div) {
         var input = div.find('input');
         var id = get_number(input);
-        input.on('click', {id: id}, toggle_button);
+        var subtree = div.find('*').add(div);
+        subtree.on('click', {id: id}, toggle_button);
     }
 
     function lets_go() {

@@ -44,10 +44,12 @@ body {
 
 #description,
 .dismissed_option {
+    cursor: pointer;
     background: #F1F1F1;
 }
 
 .selected_option {
+    cursor: pointer;
     background: #4587C8;
 }
 

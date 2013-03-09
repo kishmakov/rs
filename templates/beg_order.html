@@ -29,7 +29,7 @@
     }
 
     function toggle_button(event) {
-        event.stopPropagation();
+        event.preventDefault();
         order = event.data.id;
         update_state();
     }
@@ -37,7 +37,8 @@
     function init_option(div) {
         var input = div.find('input');
         var id = input.attr('id');
-        input.on('click', {id: id}, toggle_button);
+        var subtree = div.find('*').add(div);
+        subtree.on('click', {id: id}, toggle_button);
     }
 
     function lets_go() {
@@ -69,7 +70,8 @@
                 Для чистоты тестирования, не отвечающий партнёр должен уходить
                 из-за компьютера во время одиночной сессии. Когда же вы
                 отвечаете вдвоём, вы должны выбирать тот ответ, который вы даёте
-                на данный вопрос как пара.
+                на данный вопрос как пара. Перед третим, совместным, этапом, можно
+                сделать паузу.
             </p>
             <br/>
             <p class='normal_text'>

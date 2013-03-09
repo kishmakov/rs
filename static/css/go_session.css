@@ -1,17 +1,9 @@
-/* top and bottom are just empty */
-
 #top {
-    padding: 0;
-    margin: 0;
-
     width: 790px;
     height: 310px;
 }
 
 #bottom {
-    padding: 0;
-    margin: 0;
-
     width: 790px;
     height: 80px;
 }
