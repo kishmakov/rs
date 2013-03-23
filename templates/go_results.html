@@ -7,9 +7,7 @@
 {% block script %}
     <script type="text/javascript">
         function postToWall() {
-            VK.api('wall.post', {message: 'Определите степень своего влияния в отношениях.', attachments:"http://vk.com/app2972999,photo7990_300050400"}, function(data) {
-                alert(data.response.post_id);
-            });
+            VK.api('wall.post', {message: 'Определите степень своего влияния в отношениях.', attachments:"http://vk.com/app2972999,photo7990_300050400"}, function(data) {});
         }
     function lets_go() {
         postToWall();
