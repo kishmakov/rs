@@ -2,12 +2,12 @@ import os.path
 
 # Django settings for rs project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 # absolute path uniquely settled
 PROJECT_LOCATION = os.path.join(os.path.dirname(__file__), '..').replace('\\','/')
-SITE_URL = 'http://localhost:8000'
+SITE_URL = 'http://rs.kshmakov.org'
 
 ADMINS = (
     ('Kirill Shmakov', 'shmakir@yandex.ru'),

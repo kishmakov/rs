@@ -5,9 +5,14 @@
 {% block title %}Результаты{% endblock %}
 
 {% block script %}
-    <script>
+    <script type="text/javascript">
+        function postToWall() {
+            VK.api('wall.post', {message: 'Определите степень своего влияния в отношениях.', attachments:"http://vk.com/app2972999,photo7990_300050400"}, function(data) {
+                alert(data.response.post_id);
+            });
+        }
     function lets_go() {
-        alert('Could not post :(')
+        postToWall();
     }
 
     function init_percents() {
@@ -81,7 +86,7 @@
     <div id='bottom'>
         <div id='share_text'>
             <div class='wrapper'>
-                <p class='normal_text'>Расскажите друзьям про приложение!</p>
+                <p class='normal_text'>Расскажите друзьям про приложение:</p>
             </div>
         </div>
         <div id='go'>

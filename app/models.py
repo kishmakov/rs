@@ -25,9 +25,23 @@ class Politics(models.Model):
     class Meta:
         db_table = u'politics'
 
+class Household(models.Model):
+    id = models.IntegerField(null=False, primary_key=True, db_column=u'Id', blank=True) # Field name made lowercase.
+    question = models.TextField(db_column=u'Question', blank=True) # Field name made lowercase.
+    weight = models.IntegerField(null=True, db_column=u'Weight', blank=True) # Field name made lowercase.
+    class Meta:
+        db_table = u'household'
+
 class Religion(models.Model):
     id = models.IntegerField(null=False, primary_key=True, db_column=u'Id', blank=True) # Field name made lowercase.
     question = models.TextField(db_column=u'Question', blank=True) # Field name made lowercase.
     weight = models.IntegerField(null=True, db_column=u'Weight', blank=True) # Field name made lowercase.
     class Meta:
         db_table = u'religion'
+
+class Sex(models.Model):
+    id = models.IntegerField(null=False, primary_key=True, db_column=u'Id', blank=True) # Field name made lowercase.
+    question = models.TextField(db_column=u'Question', blank=True) # Field name made lowercase.
+    weight = models.IntegerField(null=True, db_column=u'Weight', blank=True) # Field name made lowercase.
+    class Meta:
+        db_table = u'sex'

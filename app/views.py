@@ -4,9 +4,8 @@ from django.template.loader import get_template
 from django.template import RequestContext
 from django.http import HttpResponse
 
-from models import Description, Politics, Religion
+from models import Description, Politics, Religion, Household, Sex
 from rs.settings import STATIC_URL, SITE_URL
-
 
 #######################################################################################
 # Common Functionality
@@ -60,6 +59,10 @@ def test_questions(test_name):
         db = Politics
     elif test_name == 'religion':
         db = Religion
+    elif test_name == 'sex':
+        db = Sex
+    elif test_name == 'household':
+        db = Household
 
     dbquestions = db.objects.all()
     questions = []
